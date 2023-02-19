@@ -1,5 +1,5 @@
 import {toHexString, byteArrayEquals} from "@chainsafe/ssz";
-import {ssz, allForks, capella, deneb} from "@lodestar/types";
+import {ssz, allForks, capella, deneb, verge} from "@lodestar/types";
 import {ForkSeq, MAX_BLOBS_PER_BLOCK} from "@lodestar/params";
 import {CachedBeaconStateBellatrix, CachedBeaconStateCapella} from "../types.js";
 import {getRandaoMix} from "../util/index.js";
@@ -115,6 +115,11 @@ export function executionPayloadToPayloadHeader(
     (bellatrixPayloadFields as deneb.ExecutionPayloadHeader).excessBlobGas = (
       payload as deneb.ExecutionPayloadHeader | deneb.ExecutionPayload
     ).excessBlobGas;
+  }
+
+  if (fork >= ForkSeq.verge) {
+    // https://github.com/ethereum/consensus-specs/blob/db74090c1e8dc1fb2c052bae268e22dc63061e32/specs/verge/beacon-chain.md#process_execution_payload
+    (bellatrixPayloadFields as verge.ExecutionPayloadHeader).executionWitness = (payload as verge.ExecutionPayload).executionWitness;
   }
 
   return bellatrixPayloadFields;

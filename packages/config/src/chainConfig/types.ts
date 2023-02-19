@@ -40,6 +40,9 @@ export type ChainConfig = {
   // DENEB
   DENEB_FORK_VERSION: Uint8Array;
   DENEB_FORK_EPOCH: number;
+  // VERGE
+  VERGE_FORK_VERSION: Uint8Array;
+  VERGE_FORK_EPOCH: number;
 
   // Time parameters
   SECONDS_PER_SLOT: number;
@@ -92,6 +95,9 @@ export const chainConfigTypes: SpecTypes<ChainConfig> = {
   // DENEB
   DENEB_FORK_VERSION: "bytes",
   DENEB_FORK_EPOCH: "number",
+  // VERGE
+  VERGE_FORK_VERSION: "bytes",
+  VERGE_FORK_EPOCH: "number",
 
   // Time parameters
   SECONDS_PER_SLOT: "number",
