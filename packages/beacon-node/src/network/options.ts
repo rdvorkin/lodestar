@@ -35,6 +35,5 @@ export const defaultNetworkOptions: NetworkOptions = {
   // see https://github.com/ChainSafe/lodestar/issues/5420
   gossipsubDHigh: 9,
   ...defaultGossipHandlerOpts,
-  // TEMP default to try
-  useWorker: true,
+  useWorker: false,
 };
