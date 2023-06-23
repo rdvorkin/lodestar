@@ -282,7 +282,7 @@ export class ValidatorStore {
     return proposerConfig;
   }
 
-  addSigner(signer: Signer, valProposerConfig?: ValidatorProposerConfig): void {
+  async addSigner(signer: Signer, valProposerConfig?: ValidatorProposerConfig): Promise<void> {
     const pubkey = getSignerPubkeyHex(signer);
     const proposerConfig = (valProposerConfig?.proposerConfig ?? {})[pubkey];
 
@@ -293,7 +293,7 @@ export class ValidatorStore {
         ...proposerConfig,
       });
 
-      this.doppelgangerService?.registerValidator(pubkey);
+      await this.doppelgangerService?.registerValidator(pubkey);
     }
   }
 

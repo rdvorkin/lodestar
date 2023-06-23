@@ -1,4 +1,4 @@
-import {BLSPubkey} from "@lodestar/types";
+import {BLSPubkey, Epoch} from "@lodestar/types";
 import {isEqualNonZeroRoot, minEpoch} from "../utils.js";
 import {MinMaxSurround, SurroundAttestationError, SurroundAttestationErrorCode} from "../minMaxSurround/index.js";
 import {SlashingProtectionAttestation} from "../types.js";
@@ -131,6 +131,10 @@ export class SlashingProtectionAttestationService {
   async insertAttestation(pubKey: BLSPubkey, attestation: SlashingProtectionAttestation): Promise<void> {
     await this.attestationByTarget.set(pubKey, [attestation]);
     await this.minMaxSurround.insertAttestation(pubKey, attestation);
+  }
+
+  async getAttestationForEpoch(pubKey: BLSPubkey, epoch: Epoch): Promise<SlashingProtectionAttestation | null> {
+    return this.attestationByTarget.get(pubKey, epoch);
   }
 
   /**

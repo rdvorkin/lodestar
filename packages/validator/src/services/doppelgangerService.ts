@@ -1,7 +1,9 @@
+import {fromHexString} from "@chainsafe/ssz";
 import {Epoch, ValidatorIndex} from "@lodestar/types";
 import {Api, ApiError, routes} from "@lodestar/api";
 import {Logger, sleep} from "@lodestar/utils";
 import {computeStartSlotAtEpoch} from "@lodestar/state-transition";
+import {ISlashingProtection} from "../slashingProtection/index.js";
 import {ProcessShutdownCallback, PubkeyHex} from "../types.js";
 import {IClock} from "../util/index.js";
 import {Metrics} from "../metrics.js";
@@ -42,6 +44,7 @@ export class DoppelgangerService {
     private readonly clock: IClock,
     private readonly api: Api,
     private readonly indicesService: IndicesService,
+    private readonly slashingProtection: ISlashingProtection,
     private readonly processShutdownCallback: ProcessShutdownCallback,
     private readonly metrics: Metrics | null
   ) {
@@ -54,15 +57,25 @@ export class DoppelgangerService {
     this.logger.info("doppelganger protection enabled", {detectionEpochs: DEFAULT_REMAINING_DETECTION_EPOCHS});
   }
 
-  registerValidator(pubkeyHex: PubkeyHex): void {
+  async registerValidator(pubkeyHex: PubkeyHex): Promise<void> {
     const {currentEpoch} = this.clock;
     // Disable doppelganger protection when the validator was initialized before genesis.
     // There's no activity before genesis, so doppelganger is pointless.
-    const remainingEpochs = currentEpoch <= 0 ? 0 : DEFAULT_REMAINING_DETECTION_EPOCHS;
+    let remainingEpochs = currentEpoch <= 0 ? 0 : DEFAULT_REMAINING_DETECTION_EPOCHS;
 
     // Log here to alert that validation won't be active until remainingEpochs == 0
     if (remainingEpochs > 0) {
-      this.logger.info("Registered validator for doppelganger", {remainingEpochs, pubkeyHex});
+      const attestedInPreviousEpoch = await this.slashingProtection.hasAttestedInEpoch(
+        fromHexString(pubkeyHex),
+        currentEpoch - 1
+      );
+
+      if (attestedInPreviousEpoch) {
+        remainingEpochs = 0;
+        this.logger.info("Validator attested in previous epoch, doppelganger detection skipped", {pubkeyHex});
+      } else {
+        this.logger.info("Registered validator for doppelganger", {remainingEpochs, pubkeyHex});
+      }
     }
 
     this.doppelgangerStateByPubkey.set(pubkeyHex, {

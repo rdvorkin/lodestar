@@ -99,7 +99,7 @@ describe("doppelganger service", () => {
       const doppelganger = new DoppelgangerService(logger, clock, beaconApi, indicesService, noop, null);
 
       // Add validator to doppelganger
-      doppelganger.registerValidator(pubkeyHex);
+      await doppelganger.registerValidator(pubkeyHex);
 
       // Go step by step
       for (const [step, [isLivePrev, isLiveCurr, expectedStatus]] of testCase.entries()) {

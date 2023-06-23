@@ -1,4 +1,4 @@
-import {BLSPubkey, Root} from "@lodestar/types";
+import {BLSPubkey, Epoch, Root} from "@lodestar/types";
 import {Logger} from "@lodestar/utils";
 import {Interchange, InterchangeFormatVersion} from "./interchange/types.js";
 import {SlashingProtectionBlock, SlashingProtectionAttestation} from "./types.js";
@@ -12,6 +12,8 @@ export interface ISlashingProtection {
    * Check an attestation for slash safety, and if it is safe, record it in the database
    */
   checkAndInsertAttestation(pubKey: BLSPubkey, attestation: SlashingProtectionAttestation): Promise<void>;
+
+  hasAttestedInEpoch(pubKey: BLSPubkey, epoch: Epoch): Promise<boolean>;
 
   importInterchange(interchange: Interchange, genesisValidatorsRoot: Uint8Array | Root, logger?: Logger): Promise<void>;
   exportInterchange(
