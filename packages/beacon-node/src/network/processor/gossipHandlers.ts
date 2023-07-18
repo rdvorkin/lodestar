@@ -257,8 +257,6 @@ export function getGossipHandlers(modules: ValidatorFnsModules, options: GossipH
       })) as AttestationOrBytes[];
       const {
         results: validationResults,
-        batchableBls,
-        fallbackBls,
       } = await validateGossipAttestationsSameAttData(chain, validationParams, subnet);
       for (const [i, validationResult] of validationResults.entries()) {
         if (validationResult.err) {
@@ -294,16 +292,16 @@ export function getGossipHandlers(modules: ValidatorFnsModules, options: GossipH
         chain.emitter.emit(routes.events.EventType.attestation, attestation);
       }
 
-      if (batchableBls) {
-        metrics?.gossipAttestation.totalBatch.inc();
-        metrics?.gossipAttestation.attestationBatchCount.inc(gossipHandlerParams.length);
-      } else {
-        metrics?.gossipAttestation.attestationNonBatchCount.inc(gossipHandlerParams.length);
-      }
+      // if (batchableBls) {
+      //   metrics?.gossipAttestation.totalBatch.inc();
+      //   metrics?.gossipAttestation.attestationBatchCount.inc(gossipHandlerParams.length);
+      // } else {
+      //   metrics?.gossipAttestation.attestationNonBatchCount.inc(gossipHandlerParams.length);
+      // }
 
-      if (fallbackBls) {
-        metrics?.gossipAttestation.totalBatchFallbackBlsCheck.inc();
-      }
+      // if (fallbackBls) {
+      //   metrics?.gossipAttestation.totalBatchFallbackBlsCheck.inc();
+      // }
 
       return results;
     },
