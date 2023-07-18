@@ -105,7 +105,8 @@ export async function validateGossipAttestationsSameAttData(
       publicKey: set.pubkey,
       signature: set.signature,
     })),
-    signatureSets[0].signingRoot
+    signatureSets[0].signingRoot,
+    {batchable: true}
   );
 
   // phase0 post validation
