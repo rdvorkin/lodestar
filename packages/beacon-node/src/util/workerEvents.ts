@@ -1,4 +1,6 @@
 import {MessagePort, Worker} from "node:worker_threads";
+import {Metrics} from "../metrics/metrics.js";
+import {NetworkCoreWorkerMetrics} from "../network/core/metrics.js";
 import {StrictEventEmitterSingleArg} from "./strictEvents.js";
 
 export type WorkerBridgeEvent<EventData> = {
@@ -24,6 +26,7 @@ export function wireEventsOnWorkerThread<EventData>(
   mainEventName: string,
   events: StrictEventEmitterSingleArg<EventData>,
   parentPort: MessagePort,
+  metrics: NetworkCoreWorkerMetrics | null,
   isWorkerToMain: {[K in keyof EventData]: EventDirection}
 ): void {
   // Subscribe to events from main thread
@@ -57,6 +60,7 @@ export function wireEventsOnMainThread<EventData>(
   mainEventName: string,
   events: StrictEventEmitterSingleArg<EventData>,
   worker: Pick<Worker, "on" | "postMessage">,
+  metrics: Metrics | null,
   isWorkerToMain: {[K in keyof EventData]: EventDirection}
 ): void {
   // Subscribe to events from main thread

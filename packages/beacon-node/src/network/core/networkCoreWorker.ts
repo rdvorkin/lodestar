@@ -14,7 +14,7 @@ import {wireEventsOnWorkerThread} from "../../util/workerEvents.js";
 import {NetworkEventBus, NetworkEventData, networkEventDirection} from "../events.js";
 import {peerIdToString} from "../../util/peerId.js";
 import {profileNodeJS} from "../../util/profile.js";
-import {getNetworkCoreWorkerMetrics} from "./metrics.js";
+import {NetworkCoreWorkerMetrics, getNetworkCoreWorkerMetrics} from "./metrics.js";
 import {NetworkWorkerApi, NetworkWorkerData} from "./types.js";
 import {NetworkCore} from "./networkCore.js";
 import {
@@ -85,11 +85,12 @@ new AsyncIterableBridgeHandler(getReqRespBridgeReqEvents(reqRespBridgeEventBus),
 );
 const reqRespBridgeRespCaller = new AsyncIterableBridgeCaller(getReqRespBridgeRespEvents(reqRespBridgeEventBus));
 
+let networkCoreWorkerMetrics: NetworkCoreWorkerMetrics | null = null;
 // respBridgeCaller metrics
 if (metricsRegister) {
-  const networkCoreWorkerMetrics = getNetworkCoreWorkerMetrics(metricsRegister);
+  networkCoreWorkerMetrics = getNetworkCoreWorkerMetrics(metricsRegister);
   networkCoreWorkerMetrics.reqRespBridgeRespCallerPending.addCollect(() => {
-    networkCoreWorkerMetrics.reqRespBridgeRespCallerPending.set(reqRespBridgeRespCaller.pendingCount);
+    networkCoreWorkerMetrics?.reqRespBridgeRespCallerPending.set(reqRespBridgeRespCaller.pendingCount);
   });
 }
 
@@ -112,12 +113,14 @@ wireEventsOnWorkerThread<NetworkEventData>(
   NetworkWorkerThreadEventType.networkEvent,
   events,
   parentPort,
+  networkCoreWorkerMetrics,
   networkEventDirection
 );
 wireEventsOnWorkerThread<ReqRespBridgeEventData>(
   NetworkWorkerThreadEventType.reqRespBridgeEvents,
   reqRespBridgeEventBus,
   parentPort,
+  networkCoreWorkerMetrics,
   reqRespBridgeEventDirection
 );
 
