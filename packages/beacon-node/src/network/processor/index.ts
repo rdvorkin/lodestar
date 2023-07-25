@@ -216,7 +216,7 @@ export class NetworkProcessor {
     // Search for the unknown block
     if (!this.unknownRootsBySlot.getOrDefault(slot).has(root)) {
       this.unknownRootsBySlot.getOrDefault(slot).add(root);
-      this.events.emit(NetworkEvent.unknownBlock, {emittedAt: Date.now(), rootHex: root, peer});
+      this.events.emit(NetworkEvent.unknownBlock, {rootHex: root, peer});
     }
   }
 
@@ -412,7 +412,6 @@ export class NetworkProcessor {
     setTimeout(
       () =>
         this.events.emit(NetworkEvent.gossipMessageValidationResult, {
-          emittedAt: Date.now(),
           msgId: message.msgId,
           propagationSource: message.propagationSource,
           acceptance,

@@ -377,7 +377,7 @@ export class PeerManager {
       peerData.relevantStatus = RelevantPeerStatus.relevant;
     }
     if (getConnection(this.libp2p, peer.toString())) {
-      this.networkEventBus.emit(NetworkEvent.peerConnected, {emittedAt: Date.now(), peer: peer.toString(), status});
+      this.networkEventBus.emit(NetworkEvent.peerConnected, {peer: peer.toString(), status});
     }
   }
 
@@ -634,7 +634,7 @@ export class PeerManager {
     this.connectedPeers.delete(peer.toString());
 
     this.logger.verbose("peer disconnected", {peer: prettyPrintPeerId(peer), direction, status});
-    this.networkEventBus.emit(NetworkEvent.peerDisconnected, {emittedAt: Date.now(), peer: peer.toString()});
+    this.networkEventBus.emit(NetworkEvent.peerDisconnected, {peer: peer.toString()});
     this.metrics?.peerDisconnectedEvent.inc({direction});
     this.libp2p.peerStore
       .merge(peer, {tags: {[PEER_RELEVANT_TAG]: undefined}})

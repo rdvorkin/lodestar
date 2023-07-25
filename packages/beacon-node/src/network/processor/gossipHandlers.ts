@@ -106,7 +106,7 @@ export function getGossipHandlers(modules: ValidatorFnsModules, options: GossipH
       if (e instanceof BlockGossipError) {
         if (e instanceof BlockGossipError && e.type.code === BlockErrorCode.PARENT_UNKNOWN) {
           logger.debug("Gossip block has error", {slot, root: blockHex, code: e.type.code});
-          events.emit(NetworkEvent.unknownBlockParent, {emittedAt: Date.now(), blockInput, peer: peerIdStr});
+          events.emit(NetworkEvent.unknownBlockParent, {blockInput, peer: peerIdStr});
         }
       }
 
