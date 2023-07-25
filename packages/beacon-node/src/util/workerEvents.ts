@@ -6,6 +6,7 @@ import {StrictEventEmitterSingleArg} from "./strictEvents.js";
 export type WorkerBridgeEvent<EventData> = {
   type: string;
   event: keyof EventData;
+  posted: [number, number];
   data: EventData[keyof EventData];
 };
 
@@ -38,6 +39,8 @@ export function wireEventsOnWorkerThread<EventData>(
       isWorkerToMain[data.event] === EventDirection.mainToWorker
     ) {
       events.emit(data.event, data.data);
+      const [sec, nanoSec] = process.hrtime(data.posted);
+      metrics?.networkWorkerWireEventsOnWorkerThreadPortLatency.observe(sec * 1e9 + nanoSec);
     }
   });
 
@@ -48,6 +51,7 @@ export function wireEventsOnWorkerThread<EventData>(
         const workerEvent: WorkerBridgeEvent<EventData> = {
           type: mainEventName,
           event: eventName,
+          posted: process.hrtime(),
           data,
         };
         parentPort.postMessage(workerEvent);
@@ -72,6 +76,8 @@ export function wireEventsOnMainThread<EventData>(
       isWorkerToMain[data.event] === EventDirection.workerToMain
     ) {
       events.emit(data.event, data.data);
+      const [sec, nanoSec] = process.hrtime(data.posted);
+      metrics?.networkWorkerWireEventsOnMainThreadPortLatency.observe(sec * 1e9 + nanoSec);
     }
   });
 
@@ -82,6 +88,7 @@ export function wireEventsOnMainThread<EventData>(
         const workerEvent: WorkerBridgeEvent<EventData> = {
           type: mainEventName,
           event: eventName,
+          posted: process.hrtime(),
           data,
         };
         worker.postMessage(workerEvent);
