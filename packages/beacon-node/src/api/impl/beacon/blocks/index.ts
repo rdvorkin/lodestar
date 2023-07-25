@@ -248,6 +248,7 @@ export function getBeaconBlockApi({
           chain.processBlock(blockForImport, {...opts, eagerPersistBlock: false}).catch((e) => {
             if (e instanceof BlockError && e.type.code === BlockErrorCode.PARENT_UNKNOWN) {
               network.events.emit(NetworkEvent.unknownBlockParent, {
+                emittedAt: Date.now(),
                 blockInput: blockForImport,
                 peer: IDENTITY_PEER_ID,
               });
