@@ -40,7 +40,7 @@ export function wireEventsOnWorkerThread<EventData>(
     ) {
       events.emit(data.event, data.data);
       const [sec, nanoSec] = process.hrtime(data.posted);
-      metrics?.networkWorkerWireEventsOnWorkerThreadLatency.observe(sec * 1e9 + nanoSec);
+      metrics?.networkWorkerWireEventsOnWorkerThreadLatency.observe(sec + nanoSec / 1e9);
     }
   });
 
@@ -77,7 +77,7 @@ export function wireEventsOnMainThread<EventData>(
     ) {
       events.emit(data.event, data.data);
       const [sec, nanoSec] = process.hrtime(data.posted);
-      metrics?.networkWorkerWireEventsOnMainThreadLatency.observe(sec * 1e9 + nanoSec);
+      metrics?.networkWorkerWireEventsOnMainThreadLatency.observe(sec + nanoSec / 1e9);
     }
   });
 
