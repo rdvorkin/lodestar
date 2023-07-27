@@ -45,7 +45,7 @@ export function wireEventsOnWorkerThread<EventData>(
       metrics?.networkWorkerWireEventsOnWorkerThreadLatencySec.observe(
         {
           eventName: data.event as string,
-          eventDirection: EventDirection.mainToWorker,
+          eventDirection: "mainToWorker",
         },
         networkWorkerLatency
       );
@@ -91,7 +91,7 @@ export function wireEventsOnMainThread<EventData>(
       metrics?.networkWorkerWireEventsOnMainThreadLatencySec.observe(
         {
           eventName: data.event as string,
-          eventDirection: EventDirection.workerToMain,
+          eventDirection: "workerToMain",
         },
         networkWorkerLatency
       );
