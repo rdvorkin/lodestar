@@ -46,7 +46,7 @@ export function wireEventsOnWorkerThread<EventData>(
         {eventName: data.event as string},
         networkWorkerLatency
       );
-      logger.trace("network worker message latency", networkWorkerLatency);
+      // logger.trace("network worker message latency", networkWorkerLatency);
       events.emit(data.event, data.data);
     }
   });
@@ -89,7 +89,7 @@ export function wireEventsOnMainThread<EventData>(
         {eventName: data.event as string},
         networkWorkerLatency
       );
-      logger.trace("network worker message latency", networkWorkerLatency);
+      // logger.trace("network worker message latency", networkWorkerLatency);
       events.emit(data.event, data.data);
     }
   });
