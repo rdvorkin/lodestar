@@ -1,4 +1,5 @@
 import {MessagePort, Worker} from "node:worker_threads";
+import {LoggerNode} from "@lodestar/logger/lib/node.js";
 import {Metrics} from "../metrics/metrics.js";
 import {NetworkCoreWorkerMetrics} from "../network/core/metrics.js";
 import {StrictEventEmitterSingleArg} from "./strictEvents.js";
@@ -28,6 +29,7 @@ export function wireEventsOnWorkerThread<EventData>(
   events: StrictEventEmitterSingleArg<EventData>,
   parentPort: MessagePort,
   metrics: NetworkCoreWorkerMetrics | null,
+  logger: LoggerNode,
   isWorkerToMain: {[K in keyof EventData]: EventDirection}
 ): void {
   // Subscribe to events from main thread
@@ -38,9 +40,11 @@ export function wireEventsOnWorkerThread<EventData>(
       // This check is not necessary but added for safety in case of improper implemented events
       isWorkerToMain[data.event] === EventDirection.mainToWorker
     ) {
-      events.emit(data.event, data.data);
       const [sec, nanoSec] = process.hrtime(data.posted);
-      metrics?.networkWorkerWireEventsOnWorkerThreadLatencySec.observe(sec + nanoSec / 1e9);
+      const networkWorkerLatency = sec + nanoSec / 1e9;
+      metrics?.networkWorkerWireEventsOnWorkerThreadLatencySec.observe(networkWorkerLatency);
+      logger.trace("network worker message latency", networkWorkerLatency);
+      events.emit(data.event, data.data);
     }
   });
 
@@ -65,6 +69,7 @@ export function wireEventsOnMainThread<EventData>(
   events: StrictEventEmitterSingleArg<EventData>,
   worker: Pick<Worker, "on" | "postMessage">,
   metrics: Metrics | null,
+  logger: LoggerNode,
   isWorkerToMain: {[K in keyof EventData]: EventDirection}
 ): void {
   // Subscribe to events from main thread
@@ -75,9 +80,11 @@ export function wireEventsOnMainThread<EventData>(
       // This check is not necessary but added for safety in case of improper implemented events
       isWorkerToMain[data.event] === EventDirection.workerToMain
     ) {
-      events.emit(data.event, data.data);
       const [sec, nanoSec] = process.hrtime(data.posted);
-      metrics?.networkWorkerWireEventsOnMainThreadLatencySec.observe(sec + nanoSec / 1e9);
+      const networkWorkerLatency = sec + nanoSec / 1e9;
+      metrics?.networkWorkerWireEventsOnMainThreadLatencySec.observe(networkWorkerLatency);
+      logger.trace("network worker message latency", networkWorkerLatency);
+      events.emit(data.event, data.data);
     }
   });
 
