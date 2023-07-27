@@ -296,17 +296,7 @@ export function getGossipHandlers(modules: ValidatorFnsModules, options: GossipH
         chain.emitter.emit(routes.events.EventType.attestation, attestation);
       }
 
-      // if (batchableBls) {
-      //   metrics?.gossipAttestation.totalBatch.inc();
-      //   metrics?.gossipAttestation.attestationBatchCount.inc(gossipHandlerParams.length);
-      // } else {
-      //   metrics?.gossipAttestation.attestationNonBatchCount.inc(gossipHandlerParams.length);
-      // }
-
-      // if (fallbackBls) {
-      //   metrics?.gossipAttestation.totalBatchFallbackBlsCheck.inc();
-      // }
-
+      metrics?.gossipAttestation.attestationBatchCount.observe(gossipHandlerParams.length);
       return results;
     },
 
