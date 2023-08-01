@@ -102,6 +102,7 @@ export const allForksExecution = {
     ExecutionPayloadHeader: verge.ExecutionPayloadHeader,
     BuilderBid: deneb.BuilderBid,
     SignedBuilderBid: deneb.SignedBuilderBid,
+    SSEPayloadAttributes: deneb.SSEPayloadAttributes,
   },
 };
 

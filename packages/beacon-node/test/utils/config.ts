@@ -36,7 +36,7 @@ export function getConfig(fork: ForkName, forkEpoch = 0): ChainForkConfig {
         ALTAIR_FORK_EPOCH: 0,
         BELLATRIX_FORK_EPOCH: 0,
         CAPELLA_FORK_EPOCH: 0,
-        EIP4844_FORK_EPOCH: 0,
+        DENEB_FORK_EPOCH: 0,
         VERGE_FORK_EPOCH: forkEpoch,
       });
   }

@@ -15,7 +15,7 @@ export function upgradeStateToVerge(stateDeneb: CachedBeaconStateDeneb): CachedB
 
   stateVerge.fork = ssz.phase0.Fork.toViewDU({
     previousVersion: stateDeneb.fork.currentVersion,
-    currentVersion: config.EIP4844_FORK_VERSION,
+    currentVersion: config.DENEB_FORK_VERSION,
     epoch: stateDeneb.epochCtx.epoch,
   });
 
