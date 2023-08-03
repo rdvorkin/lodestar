@@ -1,4 +1,14 @@
 {
+  "__inputs": [
+    {
+      "description": "",
+      "label": "Prometheus",
+      "name": "DS_PROMETHEUS",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus",
+      "type": "datasource"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -24,7 +34,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 38,
+  "id": null,
   "links": [
     {
       "asDropdown": true,
@@ -44,7 +54,7 @@
   "liveNow": false,
   "panels": [
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
@@ -56,799 +66,7 @@
         "y": 0
       },
       "id": 510,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 20,
-                "gradientMode": "opacity",
-                "hideFrom": {
-                  "graph": false,
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 4,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "normal"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "short"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 1
-          },
-          "id": 502,
-          "options": {
-            "graph": {},
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "7.4.5",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": false,
-              "expr": "lodestar_peers_by_client_count",
-              "format": "time_series",
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "{{client}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Peers by client implementation",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 1
-          },
-          "id": 328,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "8.2.2",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": false,
-              "expr": "lodestar_gossip_mesh_peers_by_type_count{type!~\"beacon_attestation\"}",
-              "format": "time_series",
-              "interval": "",
-              "legendFormat": "{{type}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Mesh peers count",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 9
-          },
-          "id": 330,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "8.2.2",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": false,
-              "expr": "lodestar_gossip_peer_score_by_threshold_count",
-              "format": "time_series",
-              "interval": "",
-              "legendFormat": "{{threshold}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Peer count per gossip score threshold",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "max"
-                },
-                "properties": [
-                  {
-                    "id": "custom.fillBelowTo",
-                    "value": "avg"
-                  },
-                  {
-                    "id": "custom.fillOpacity",
-                    "value": 12
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "semi-dark-green",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "avg"
-                },
-                "properties": [
-                  {
-                    "id": "custom.fillBelowTo",
-                    "value": "min"
-                  },
-                  {
-                    "id": "custom.fillOpacity",
-                    "value": 12
-                  },
-                  {
-                    "id": "custom.gradientMode",
-                    "value": "opacity"
-                  },
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "super-light-green",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              },
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "min"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-blue",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 9
-          },
-          "id": 331,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "8.2.2",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": false,
-              "expr": "lodestar_gossip_score_avg_min_max_max",
-              "format": "time_series",
-              "interval": "",
-              "legendFormat": "max",
-              "refId": "max"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": false,
-              "expr": "lodestar_gossip_score_avg_min_max_avg",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "avg",
-              "refId": "avg"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": false,
-              "expr": "lodestar_gossip_score_avg_min_max_min",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "min",
-              "refId": "min"
-            }
-          ],
-          "title": "Gossip score avg / min / max",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 0,
-              "mappings": [],
-              "min": 0.01,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 12,
-            "x": 0,
-            "y": 18
-          },
-          "id": 70,
-          "options": {
-            "displayMode": "lcd",
-            "minVizHeight": 10,
-            "minVizWidth": 0,
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "last"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showUnfilled": true,
-            "text": {}
-          },
-          "pluginVersion": "9.3.2",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": false,
-              "expr": "lodestar_gossip_mesh_peers_by_beacon_attestation_subnet_count",
-              "interval": "",
-              "legendFormat": "{{subnet}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Attnet mesh peers per subnet",
-          "type": "bargauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "min": 0.01,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 12,
-            "x": 12,
-            "y": 18
-          },
-          "id": 68,
-          "options": {
-            "displayMode": "lcd",
-            "minVizHeight": 10,
-            "minVizWidth": 0,
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "last"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showUnfilled": true,
-            "text": {}
-          },
-          "pluginVersion": "9.3.2",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "expr": "lodestar_gossip_mesh_peers_by_type_count{type!~\"beacon_attestation\"}",
-              "format": "time_series",
-              "interval": "",
-              "legendFormat": "{{type}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Mesh peers",
-          "type": "bargauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 12,
-            "x": 0,
-            "y": 23
-          },
-          "id": 300,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "8.2.2",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": false,
-              "expr": "count(lodestar_gossip_mesh_peers_by_beacon_attestation_subnet_count > 0)",
-              "interval": "",
-              "legendFormat": "{{subnet}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Attnet count with > 0 mesh peers",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 12,
-            "x": 12,
-            "y": 23
-          },
-          "id": 298,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "multi",
-              "sort": "none"
-            }
-          },
-          "pluginVersion": "8.2.2",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": false,
-              "expr": "lodestar_gossip_topic_peers_by_type_count{type!~\"beacon_attestation\"}",
-              "format": "time_series",
-              "interval": "",
-              "legendFormat": "{{type}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Topic peers count",
-          "type": "timeseries"
-        }
-      ],
+      "panels": [],
       "targets": [
         {
           "datasource": {
@@ -862,20 +80,10 @@
       "type": "row"
     },
     {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 1
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
       },
-      "id": 608,
-      "panels": [],
-      "title": "Network Worker",
-      "type": "row"
-    },
-    {
-      "description": "Async time to send a message across the worker/parent port",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -888,7 +96,7 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 23,
+            "fillOpacity": 20,
             "gradientMode": "opacity",
             "hideFrom": {
               "graph": false,
@@ -898,45 +106,33 @@
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
-            "pointSize": 5,
+            "pointSize": 4,
             "scaleDistribution": {
-              "log": 2,
-              "type": "log"
+              "type": "linear"
             },
             "showPoints": "never",
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
             }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
+          "min": 0,
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 8,
         "w": 12,
         "x": 0,
-        "y": 2
+        "y": 1
       },
-      "id": 148,
+      "id": 502,
       "options": {
         "graph": {},
         "legend": {
@@ -958,107 +154,81 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": false,
-          "expr": "rate(lodestar_network_worker_wire_events_on_worker_thread_latency_seconds_sum[6m])/rate(lodestar_network_worker_wire_events_on_worker_thread_latency_seconds_count[6m])",
+          "expr": "lodestar_peers_by_client_count",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "{{eventName}}",
-          "refId": "to worker thread"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "exemplar": false,
-          "expr": "rate(lodestar_network_worker_wire_events_on_main_thread_latency_seconds[6m])",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{eventName}}",
-          "refId": "to main thread"
+          "intervalFactor": 1,
+          "legendFormat": "{{client}}",
+          "refId": "A"
         }
       ],
-      "title": "Network worker - to/from worker port latency",
+      "title": "Peers by client implementation",
       "type": "timeseries"
     },
     {
-      "gridPos": {
-        "h": 6,
-        "w": 12,
-        "x": 12,
-        "y": 2
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
       },
-      "id": 609,
-      "type": "timeseries",
-      "title": "Network Worker Message  Latency - Worker to Main",
-      "pluginVersion": "7.4.5",
-      "description": "Async time to send a message across the worker/parent port",
       "fieldConfig": {
         "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
-            "drawStyle": "line",
-            "lineInterpolation": "linear",
-            "barAlignment": 0,
-            "lineWidth": 1,
-            "fillOpacity": 23,
-            "gradientMode": "opacity",
-            "spanNulls": false,
-            "showPoints": "never",
-            "pointSize": 5,
-            "stacking": {
-              "mode": "none",
-              "group": "A"
-            },
-            "axisPlacement": "auto",
-            "axisLabel": "",
-            "axisColorMode": "text",
-            "scaleDistribution": {
-              "type": "log",
-              "log": 2
-            },
             "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
             "hideFrom": {
-              "tooltip": false,
-              "viz": false,
               "legend": false,
-              "graph": false
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
             }
           },
-          "color": {
-            "mode": "palette-classic"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
+          "mappings": []
         },
         "overrides": []
       },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 328,
       "options": {
-        "tooltip": {
-          "mode": "multi",
-          "sort": "none"
-        },
         "legend": {
-          "showLegend": true,
+          "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "calcs": []
+          "showLegend": true
         },
-        "graph": {}
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
+      "pluginVersion": "8.2.2",
       "targets": [
         {
           "datasource": {
@@ -1066,13 +236,239 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": false,
-          "expr": "avg(rate(lodestar_network_worker_wire_events_on_main_thread_latency_seconds_sum[$rate_interval])/rate(lodestar_network_worker_wire_events_on_main_thread_latency_seconds_count[$rate_interval]))",
-          "hide": true,
+          "expr": "lodestar_gossip_mesh_peers_by_type_count{type!~\"beacon_attestation\"}",
+          "format": "time_series",
           "interval": "",
-          "legendFormat": "Average to Main",
-          "refId": "average",
-          "editorMode": "code",
-          "range": true
+          "legendFormat": "{{type}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Mesh peers count",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 330,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "exemplar": false,
+          "expr": "lodestar_gossip_peer_score_by_threshold_count",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{threshold}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Peer count per gossip score threshold",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "max"
+            },
+            "properties": [
+              {
+                "id": "custom.fillBelowTo",
+                "value": "avg"
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 12
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "avg"
+            },
+            "properties": [
+              {
+                "id": "custom.fillBelowTo",
+                "value": "min"
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 12
+              },
+              {
+                "id": "custom.gradientMode",
+                "value": "opacity"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "super-light-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "min"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 331,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "exemplar": false,
+          "expr": "lodestar_gossip_score_avg_min_max_max",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "max",
+          "refId": "max"
         },
         {
           "datasource": {
@@ -1080,30 +476,297 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": false,
-          "expr": "rate(lodestar_network_worker_wire_events_on_main_thread_latency_seconds_sum[$rate_interval])/rate(lodestar_network_worker_wire_events_on_main_thread_latency_seconds_count[$rate_interval])",
+          "expr": "lodestar_gossip_score_avg_min_max_avg",
+          "hide": false,
           "interval": "",
-          "legendFormat": "{{eventName}}",
-          "refId": "by eventName",
-          "editorMode": "code",
-          "range": true
+          "legendFormat": "avg",
+          "refId": "avg"
         },
         {
           "datasource": {
-            "uid": "prometheus_local",
-            "type": "prometheus"
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
           },
-          "refId": "A",
+          "exemplar": false,
+          "expr": "lodestar_gossip_score_avg_min_max_min",
           "hide": false,
-          "editorMode": "code",
-          "expr": "rate(lodestar_network_worker_wire_events_on_worker_thread_latency_seconds_sum[$rate_interval])/rate(lodestar_network_worker_wire_events_on_worker_thread_latency_seconds_count[$rate_interval])",
-          "legendFormat": "{{eventName}}",
-          "range": true
+          "interval": "",
+          "legendFormat": "min",
+          "refId": "min"
         }
       ],
+      "title": "Gossip score avg / min / max",
+      "type": "timeseries"
+    },
+    {
       "datasource": {
-        "uid": "prometheus_local",
-        "type": "prometheus"
-      }
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0.01
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 70,
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "text": {}
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "exemplar": false,
+          "expr": "lodestar_gossip_mesh_peers_by_beacon_attestation_subnet_count",
+          "interval": "",
+          "legendFormat": "{{subnet}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Attnet mesh peers per subnet",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0.01
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 68,
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "text": {}
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "expr": "lodestar_gossip_mesh_peers_by_type_count{type!~\"beacon_attestation\"}",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{type}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Mesh peers",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 23
+      },
+      "id": 300,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "exemplar": false,
+          "expr": "count(lodestar_gossip_mesh_peers_by_beacon_attestation_subnet_count > 0)",
+          "interval": "",
+          "legendFormat": "{{subnet}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Attnet count with > 0 mesh peers",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": []
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 23
+      },
+      "id": 298,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.2.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "exemplar": false,
+          "expr": "lodestar_gossip_topic_peers_by_type_count{type!~\"beacon_attestation\"}",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{type}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Topic peers count",
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -1115,7 +778,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 30
       },
       "id": 28,
       "panels": [],
@@ -1174,19 +837,6 @@
           },
           "mappings": [],
           "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "short"
         },
         "overrides": []
@@ -1195,7 +845,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 31
       },
       "id": 30,
       "options": {
@@ -1272,19 +922,6 @@
           },
           "mappings": [],
           "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "short"
         },
         "overrides": []
@@ -1293,7 +930,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 9
+        "y": 31
       },
       "id": 507,
       "options": {
@@ -1373,19 +1010,6 @@
             }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "short"
         },
         "overrides": []
@@ -1394,7 +1018,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 39
       },
       "id": 32,
       "options": {
@@ -1461,7 +1085,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 17
+        "y": 39
       },
       "heatmap": {},
       "hideZeroBuckets": false,
@@ -1583,19 +1207,6 @@
           },
           "mappings": [],
           "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "short"
         },
         "overrides": []
@@ -1604,7 +1215,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 25
+        "y": 47
       },
       "id": 506,
       "options": {
@@ -1672,7 +1283,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 25
+        "y": 47
       },
       "heatmap": {},
       "hideZeroBuckets": false,
@@ -1784,7 +1395,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 33
+        "y": 55
       },
       "heatmap": {},
       "hideZeroBuckets": false,
@@ -1905,19 +1516,6 @@
             }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "short"
         },
         "overrides": [
@@ -1942,7 +1540,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 33
+        "y": 55
       },
       "id": 34,
       "options": {
@@ -2040,7 +1638,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 41
+        "y": 63
       },
       "id": 508,
       "options": {
@@ -2115,19 +1713,6 @@
             }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "short"
         },
         "overrides": []
@@ -2136,7 +1721,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 41
+        "y": 63
       },
       "id": 38,
       "options": {
@@ -2180,7 +1765,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 48
+        "y": 70
       },
       "id": 512,
       "panels": [],
@@ -2217,7 +1802,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 49
+        "y": 71
       },
       "hiddenSeries": false,
       "id": 294,
@@ -2327,7 +1912,7 @@
         "h": 7,
         "w": 6,
         "x": 12,
-        "y": 49
+        "y": 71
       },
       "hiddenSeries": false,
       "id": 296,
@@ -2423,7 +2008,7 @@
         "h": 7,
         "w": 6,
         "x": 18,
-        "y": 49
+        "y": 71
       },
       "hiddenSeries": false,
       "id": 297,
@@ -2508,7 +2093,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 56
+        "y": 78
       },
       "id": 75,
       "panels": [],
@@ -2566,19 +2151,6 @@
             }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "percentunit"
         },
         "overrides": []
@@ -2587,7 +2159,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 57
+        "y": 79
       },
       "id": 77,
       "options": {
@@ -2662,19 +2234,6 @@
             }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "none"
         },
         "overrides": []
@@ -2683,7 +2242,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 57
+        "y": 79
       },
       "id": 80,
       "options": {
@@ -2758,19 +2317,6 @@
             }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "s"
         },
         "overrides": []
@@ -2779,7 +2325,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 65
+        "y": 87
       },
       "id": 79,
       "options": {
@@ -2855,19 +2401,6 @@
             }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
           "unit": "percentunit"
         },
         "overrides": []
@@ -2876,7 +2409,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 65
+        "y": 87
       },
       "id": 78,
       "options": {
@@ -2958,7 +2491,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 73
+        "y": 95
       },
       "id": 88,
       "options": {
@@ -3041,7 +2574,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 74
+        "y": 96
       },
       "id": 82,
       "options": {
@@ -3125,7 +2658,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 83
+        "y": 105
       },
       "id": 333,
       "options": {
@@ -3221,7 +2754,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 84
+        "y": 106
       },
       "id": 244,
       "options": {
@@ -3282,7 +2815,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 92
+        "y": 114
       },
       "id": 524,
       "panels": [],
@@ -3362,7 +2895,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 93
+        "y": 115
       },
       "id": 514,
       "options": {
@@ -3466,7 +2999,7 @@
         "h": 5,
         "w": 12,
         "x": 12,
-        "y": 93
+        "y": 115
       },
       "id": 520,
       "options": {
@@ -3547,7 +3080,7 @@
         "h": 5,
         "w": 12,
         "x": 12,
-        "y": 98
+        "y": 120
       },
       "id": 522,
       "options": {
@@ -3603,7 +3136,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 101
+        "y": 123
       },
       "id": 518,
       "options": {
@@ -3708,7 +3241,7 @@
         "h": 6,
         "w": 12,
         "x": 12,
-        "y": 103
+        "y": 125
       },
       "id": 521,
       "options": {
@@ -3789,7 +3322,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 109
+        "y": 131
       },
       "id": 540,
       "options": {
@@ -3868,7 +3401,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 109
+        "y": 131
       },
       "id": 542,
       "options": {
@@ -3905,7 +3438,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 117
+        "y": 139
       },
       "id": 528,
       "panels": [],
@@ -3985,7 +3518,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 118
+        "y": 140
       },
       "id": 526,
       "options": {
@@ -4082,7 +3615,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 118
+        "y": 140
       },
       "id": 530,
       "options": {
@@ -4186,7 +3719,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 126
+        "y": 148
       },
       "id": 534,
       "options": {
@@ -4277,7 +3810,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 126
+        "y": 148
       },
       "id": 532,
       "options": {
@@ -4373,7 +3906,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 134
+        "y": 156
       },
       "id": 536,
       "options": {
@@ -4481,7 +4014,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 134
+        "y": 156
       },
       "id": 538,
       "options": {
@@ -4530,7 +4063,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 142
+        "y": 164
       },
       "id": 600,
       "panels": [],
@@ -4586,7 +4119,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 143
+        "y": 165
       },
       "id": 602,
       "options": {
@@ -4714,7 +4247,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 143
+        "y": 165
       },
       "id": 604,
       "options": {
@@ -4866,7 +4399,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 151
+        "y": 173
       },
       "id": 603,
       "options": {
@@ -4945,7 +4478,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 151
+        "y": 173
       },
       "id": 601,
       "options": {
@@ -4986,7 +4519,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 159
+        "y": 181
       },
       "id": 188,
       "panels": [],
@@ -5051,7 +4584,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 160
+        "y": 182
       },
       "id": 180,
       "options": {
@@ -5132,7 +4665,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 160
+        "y": 182
       },
       "id": 176,
       "options": {
@@ -5213,7 +4746,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 168
+        "y": 190
       },
       "id": 182,
       "options": {
@@ -5294,7 +4827,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 168
+        "y": 190
       },
       "id": 178,
       "options": {
@@ -5375,7 +4908,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 176
+        "y": 198
       },
       "id": 605,
       "options": {
@@ -5458,7 +4991,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 176
+        "y": 198
       },
       "id": 606,
       "options": {
@@ -5541,7 +5074,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 184
+        "y": 206
       },
       "id": 498,
       "options": {
@@ -5622,7 +5155,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 184
+        "y": 206
       },
       "id": 500,
       "options": {
@@ -5703,7 +5236,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 192
+        "y": 214
       },
       "id": 184,
       "options": {
@@ -5784,7 +5317,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 192
+        "y": 214
       },
       "id": 501,
       "options": {
@@ -5928,7 +5461,7 @@
             "condition": "",
             "key": "instance",
             "operator": "=",
-            "value": "feat1-lg1k-hzax41"
+            "value": "unstable-lg1k-hzax41"
           }
         ],
         "hide": 0,
@@ -5959,6 +5492,6 @@
   "timezone": "utc",
   "title": "Lodestar - networking",
   "uid": "lodestar_networking",
-  "version": 43,
+  "version": 14,
   "weekStart": "monday"
 }
