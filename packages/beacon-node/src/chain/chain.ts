@@ -462,20 +462,20 @@ export class BeaconChain implements IBeaconChain {
     return data && {block: data, executionOptimistic: false};
   }
 
-  produceBlock(blockAttributes: BlockAttributes): Promise<{block: allForks.BeaconBlock; blockValue: Wei}> {
+  produceBlock(blockAttributes: BlockAttributes): Promise<{block: allForks.BeaconBlock; executionPayloadValue: Wei}> {
     return this.produceBlockWrapper<BlockType.Full>(BlockType.Full, blockAttributes);
   }
 
   produceBlindedBlock(
     blockAttributes: BlockAttributes
-  ): Promise<{block: allForks.BlindedBeaconBlock; blockValue: Wei}> {
+  ): Promise<{block: allForks.BlindedBeaconBlock; executionPayloadValue: Wei}> {
     return this.produceBlockWrapper<BlockType.Blinded>(BlockType.Blinded, blockAttributes);
   }
 
   async produceBlockWrapper<T extends BlockType>(
     blockType: T,
     {randaoReveal, graffiti, slot, feeRecipient}: BlockAttributes
-  ): Promise<{block: AssembledBlockType<T>; blockValue: Wei}> {
+  ): Promise<{block: AssembledBlockType<T>; executionPayloadValue: Wei}> {
     const head = this.forkChoice.getHead();
     const state = await this.regen.getBlockSlotState(
       head.blockRoot,
@@ -487,7 +487,7 @@ export class BeaconChain implements IBeaconChain {
     const proposerIndex = state.epochCtx.getBeaconProposer(slot);
     const proposerPubKey = state.epochCtx.index2pubkey[proposerIndex].toBytes();
 
-    const {body, blobs, blockValue} = await produceBlockBody.call(this, blockType, state, {
+    const {body, blobs, executionPayloadValue} = await produceBlockBody.call(this, blockType, state, {
       randaoReveal,
       graffiti,
       slot,
@@ -537,7 +537,7 @@ export class BeaconChain implements IBeaconChain {
       );
     }
 
-    return {block, blockValue};
+    return {block, executionPayloadValue};
   }
 
   /**

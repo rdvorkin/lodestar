@@ -86,7 +86,11 @@ export function pollBuilderValidatorRegistration(
     const pubkeyHexes = validatorStore
       .getAllLocalIndices()
       .map((index) => validatorStore.getPubkeyOfIndex(index))
-      .filter((pubkeyHex) => pubkeyHex !== undefined && validatorStore.isBuilderEnabled(pubkeyHex));
+      .filter(
+        (pubkeyHex) =>
+          pubkeyHex !== undefined &&
+          validatorStore.getBuilderSelection(pubkeyHex) !== routes.validator.BuilderSelection.ExecutionOnly
+      );
 
     if (pubkeyHexes.length > 0) {
       const pubkeyHexesChunks = batchItems(pubkeyHexes, {batchSize: REGISTRATION_CHUNK_SIZE});

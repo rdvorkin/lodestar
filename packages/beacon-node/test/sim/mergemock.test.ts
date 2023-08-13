@@ -6,7 +6,7 @@ import {TimestampFormatCode} from "@lodestar/logger";
 import {SLOTS_PER_EPOCH} from "@lodestar/params";
 import {ChainConfig} from "@lodestar/config";
 import {Epoch, allForks, bellatrix} from "@lodestar/types";
-import {ValidatorProposerConfig, BuilderSelection} from "@lodestar/validator";
+import {ValidatorProposerConfig} from "@lodestar/validator";
 import {routes} from "@lodestar/api";
 
 import {ClockEvent} from "../../src/util/clock.js";
@@ -22,8 +22,7 @@ import {logFilesDir} from "./params.js";
 import {shell} from "./shell.js";
 
 // NOTE: How to run
-// EL_BINARY_DIR=g11tech/mergemock:latest EL_SCRIPT_DIR=mergemock LODESTAR_PRESET=mainnet \
-// ETH_PORT=8661 ENGINE_PORT=8551 yarn mocha test/sim/mergemock.test.ts
+// EL_BINARY_DIR=g11tech/mergemock:latest EL_SCRIPT_DIR=mergemock LODESTAR_PRESET=mainnet ETH_PORT=8661 ENGINE_PORT=8551 yarn mocha test/sim/mergemock.test.ts
 // ```
 
 /* eslint-disable no-console, @typescript-eslint/naming-convention */
@@ -184,9 +183,8 @@ describe("executionEngine / ExecutionEngineHttp", function () {
         strictFeeRecipientCheck: true,
         feeRecipient: feeRecipientEngine,
         builder: {
-          enabled: true,
           gasLimit: 30000000,
-          selection: BuilderSelection.BuilderAlways,
+          selection: routes.validator.BuilderSelection.BuilderAlways,
         },
       },
     } as ValidatorProposerConfig;

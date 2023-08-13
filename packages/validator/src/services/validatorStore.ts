@@ -63,21 +63,13 @@ export type SignerRemote = {
   pubkey: PubkeyHex;
 };
 
-export enum BuilderSelection {
-  BuilderAlways = "builderalways",
-  MaxProfit = "maxprofit",
-  /** Only activate builder flow for DVT block proposal protocols */
-  BuilderOnly = "builderonly",
-}
-
 type DefaultProposerConfig = {
   graffiti: string;
   strictFeeRecipientCheck: boolean;
   feeRecipient: Eth1Address;
   builder: {
-    enabled: boolean;
     gasLimit: number;
-    selection: BuilderSelection;
+    selection: routes.validator.BuilderSelection;
   };
 };
 
@@ -86,9 +78,8 @@ export type ProposerConfig = {
   strictFeeRecipientCheck?: boolean;
   feeRecipient?: Eth1Address;
   builder?: {
-    enabled?: boolean;
     gasLimit?: number;
-    selection?: BuilderSelection;
+    selection?: routes.validator.BuilderSelection;
   };
 };
 
@@ -123,7 +114,7 @@ type ValidatorData = ProposerConfig & {
 export const defaultOptions = {
   suggestedFeeRecipient: "0x0000000000000000000000000000000000000000",
   defaultGasLimit: 30_000_000,
-  builderSelection: BuilderSelection.MaxProfit,
+  builderSelection: routes.validator.BuilderSelection.MaxProfit,
 };
 
 /**
@@ -151,7 +142,6 @@ export class ValidatorStore {
       strictFeeRecipientCheck: defaultConfig.strictFeeRecipientCheck ?? false,
       feeRecipient: defaultConfig.feeRecipient ?? defaultOptions.suggestedFeeRecipient,
       builder: {
-        enabled: defaultConfig.builder?.enabled ?? false,
         gasLimit: defaultConfig.builder?.gasLimit ?? defaultOptions.defaultGasLimit,
         selection: defaultConfig.builder?.selection ?? defaultOptions.builderSelection,
       },
@@ -217,11 +207,7 @@ export class ValidatorStore {
     return this.validators.get(pubkeyHex)?.graffiti ?? this.defaultProposerConfig.graffiti;
   }
 
-  isBuilderEnabled(pubkeyHex: PubkeyHex): boolean {
-    return (this.validators.get(pubkeyHex)?.builder || {}).enabled ?? this.defaultProposerConfig.builder.enabled;
-  }
-
-  getBuilderSelection(pubkeyHex: PubkeyHex): BuilderSelection {
+  getBuilderSelection(pubkeyHex: PubkeyHex): routes.validator.BuilderSelection {
     return (this.validators.get(pubkeyHex)?.builder || {}).selection ?? this.defaultProposerConfig.builder.selection;
   }
 
@@ -274,7 +260,6 @@ export class ValidatorStore {
       graffiti !== undefined ||
       strictFeeRecipientCheck !== undefined ||
       feeRecipient !== undefined ||
-      builder?.enabled !== undefined ||
       builder?.gasLimit !== undefined
     ) {
       proposerConfig = {graffiti, strictFeeRecipientCheck, feeRecipient, builder};
