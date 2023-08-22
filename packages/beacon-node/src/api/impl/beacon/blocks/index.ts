@@ -153,7 +153,7 @@ export function getBeaconBlockApi({
 
   return {
     async getBlockHeaders(filters) {
-      // TODO: Make this code BlindedOrFull block aware
+      // TODO: (matthewkeil) Make this code BlindedOrFull block aware
 
       // TODO - SLOW CODE: This code seems like it could be improved
 

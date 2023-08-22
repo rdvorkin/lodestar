@@ -78,5 +78,8 @@ export function deserializeFullOrBlindedSignedBeaconBlock(
   config: ChainForkConfig,
   bytes: Buffer | Uint8Array
 ): allForks.FullOrBlindedSignedBeaconBlock {
-  TODO;
+  // TODO: (matthewkeil) Temp to get build working
+  config;
+  bytes;
+  return {} as allForks.FullOrBlindedSignedBeaconBlock;
 }
