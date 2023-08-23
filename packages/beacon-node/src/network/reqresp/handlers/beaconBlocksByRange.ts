@@ -76,6 +76,7 @@ export async function* onBlocksOrBlobSidecarsByRange(
           throw new ResponseError(RespStatus.SERVER_ERROR, `No item for root ${block.blockRoot} slot ${block.slot}`);
         }
 
+        // TODO: (matthewkeil)
         // It's a bis sus that deleting this line will still let the code compile..
         // This code MUST include tests to ensure ReqResp works with full or blinded blocks
         yield {
