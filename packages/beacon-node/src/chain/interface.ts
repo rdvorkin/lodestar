@@ -10,6 +10,7 @@ import {BeaconConfig} from "@lodestar/config";
 import {Logger} from "@lodestar/utils";
 
 import {IForkChoice, ProtoBlock} from "@lodestar/fork-choice";
+import {ForkSeq} from "@lodestar/params";
 import {IEth1ForBlockProduction} from "../eth1/index.js";
 import {IExecutionEngine, IExecutionBuilder} from "../execution/index.js";
 import {Metrics} from "../metrics/metrics.js";
@@ -139,7 +140,7 @@ export interface IBeaconChain {
   getBlobSidecars(beaconBlock: deneb.BeaconBlock): deneb.BlobSidecars;
 
   blindedBlockToFull(block: allForks.FullOrBlindedSignedBeaconBlock): Promise<allForks.SignedBeaconBlock>;
-  blindedBlockToFullBytes(block: Uint8Array): Promise<Uint8Array>;
+  blindedBlockToFullBytes(forkSeq: ForkSeq, block: Uint8Array): Promise<Uint8Array>;
 
   produceBlock(blockAttributes: BlockAttributes): Promise<{block: allForks.BeaconBlock; blockValue: Wei}>;
   produceBlindedBlock(blockAttributes: BlockAttributes): Promise<{block: allForks.BlindedBeaconBlock; blockValue: Wei}>;

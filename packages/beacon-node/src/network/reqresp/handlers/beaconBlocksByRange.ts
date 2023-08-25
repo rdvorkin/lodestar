@@ -42,11 +42,12 @@ export async function* onBlocksOrBlobSidecarsByRange(
   if (startSlot <= finalizedSlot) {
     // Chain of blobs won't change
     for await (const {key, value} of db.finalized.binaryEntriesStream({gte: startSlot, lt: endSlot})) {
+      const {name, seq} = chain.config.getForkInfo(db.finalized.decodeKey(key));
       // It's a bis sus that deleting this line will still let the code compile..
       // This code MUST include tests to ensure ReqResp works with full or blinded blocks
       yield {
-        data: await chain.blindedBlockToFullBytes(value),
-        fork: chain.config.getForkName(db.finalized.decodeKey(key)),
+        data: await chain.blindedBlockToFullBytes(seq, value),
+        fork: name,
       };
     }
   }
@@ -79,9 +80,10 @@ export async function* onBlocksOrBlobSidecarsByRange(
         // TODO: (matthewkeil)
         // It's a bis sus that deleting this line will still let the code compile..
         // This code MUST include tests to ensure ReqResp works with full or blinded blocks
+        const {name, seq} = chain.config.getForkInfo(block.slot);
         yield {
-          data: await chain.blindedBlockToFullBytes(blockBytes),
-          fork: chain.config.getForkName(block.slot),
+          data: await chain.blindedBlockToFullBytes(seq, blockBytes),
+          fork: name,
         };
       }
 
