@@ -153,8 +153,6 @@ export function getBeaconBlockApi({
 
   return {
     async getBlockHeaders(filters) {
-      // TODO: (matthewkeil) Make this code BlindedOrFull block aware
-
       // TODO - SLOW CODE: This code seems like it could be improved
 
       // If one block in the response contains an optimistic block, mark the entire response as optimistic
