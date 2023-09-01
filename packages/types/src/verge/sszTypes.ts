@@ -4,7 +4,7 @@ import {
   ByteVectorType,
   VectorCompositeType,
   ByteListType,
-  OptionalType,
+  OptionalType
 } from "@chainsafe/ssz";
 import {
   HISTORICAL_ROOTS_LIMIT,
@@ -17,7 +17,7 @@ import {ssz as primitiveSsz} from "../primitive/index.js";
 import {ssz as phase0Ssz} from "../phase0/index.js";
 import {ssz as altairSsz} from "../altair/index.js";
 import {ssz as bellatrixSsz} from "../bellatrix/index.js";
-// import {ssz as capellaSsz} from "../capella/index.js";
+import {ssz as capellaSsz} from "../capella/index.js";
 // import {ssz as denebSsz} from "../deneb/index.js";
 
 const {UintNum64, Root, BLSSignature} = primitiveSsz;
@@ -37,19 +37,16 @@ export const SuffixStateDiff = new ContainerType(
   {
     suffix: primitiveSsz.Byte,
     // Null means not currently present
-    // TODO: Use new SSZ type Optional: https://github.com/ethereum/consensus-specs/commit/db74090c1e8dc1fb2c052bae268e22dc63061e32
     currentValue: new OptionalType(primitiveSsz.Bytes32),
-    // newValue not present for the kaustenine network
     // Null means value not updated
-    // newValue: new OptionalType(primitiveSsz.Bytes32),
+    newValue: new OptionalType(primitiveSsz.Bytes32),
   },
   {
     typeName: "SuffixStateDiff",
     casingMap: {
       suffix: "suffix",
       currentValue: "currentValue",
-      // newValue not present for the kaustenine network
-      // newValue: "newValue"
+      newValue: "newValue"
     },
   }
 );
@@ -108,7 +105,7 @@ export const ExecutionWitness = new ContainerType(
 
 export const ExecutionPayload = new ContainerType(
   {
-    ...bellatrixSsz.ExecutionPayload.fields,
+    ...capellaSsz.ExecutionPayload.fields,
     executionWitness: ExecutionWitness, // New in verge
   },
   {typeName: "ExecutionPayload", jsonCase: "eth2"}
@@ -116,7 +113,7 @@ export const ExecutionPayload = new ContainerType(
 
 export const ExecutionPayloadHeader = new ContainerType(
   {
-    ...bellatrixSsz.ExecutionPayloadHeader.fields,
+    ...capellaSsz.ExecutionPayloadHeader.fields,
     executionWitnessRoot: Root, // New in verge
   },
   {typeName: "ExecutionPayloadHeader", jsonCase: "eth2"}
@@ -127,7 +124,7 @@ export const BeaconBlockBody = new ContainerType(
   {
     ...altairSsz.BeaconBlockBody.fields,
     executionPayload: ExecutionPayload, // Modified in verge
-    // blsToExecutionChanges: capellaSsz.BeaconBlockBody.fields.blsToExecutionChanges,
+    blsToExecutionChanges: capellaSsz.BeaconBlockBody.fields.blsToExecutionChanges,
     // blobKzgCommitments: denebSsz.BlobKzgCommitments,
   },
   {typeName: "BeaconBlockBody", jsonCase: "eth2", cachePermanentRootStruct: true}
@@ -135,7 +132,7 @@ export const BeaconBlockBody = new ContainerType(
 
 export const BeaconBlock = new ContainerType(
   {
-    ...bellatrixSsz.BeaconBlock.fields,
+    ...capellaSsz.BeaconBlock.fields,
     body: BeaconBlockBody, // Modified in verge
   },
   {typeName: "BeaconBlock", jsonCase: "eth2", cachePermanentRootStruct: true}
@@ -151,8 +148,9 @@ export const SignedBeaconBlock = new ContainerType(
 
 export const BlindedBeaconBlockBody = new ContainerType(
   {
-    ...BeaconBlockBody.fields,
+    ...altairSsz.BeaconBlockBody.fields,
     executionPayloadHeader: ExecutionPayloadHeader, // Modified in verge
+    blsToExecutionChanges: capellaSsz.BeaconBlockBody.fields.blsToExecutionChanges,
     // blobKzgCommitments: denebSsz.BlobKzgCommitments,
   },
   {typeName: "BlindedBeaconBlockBody", jsonCase: "eth2", cachePermanentRootStruct: true}
@@ -214,10 +212,10 @@ export const BeaconState = new ContainerType(
     // Execution
     latestExecutionPayloadHeader: ExecutionPayloadHeader, // Modified in verge
     // Withdrawals
-    // nextWithdrawalIndex: capellaSsz.BeaconState.fields.nextWithdrawalIndex,
-    // nextWithdrawalValidatorIndex: capellaSsz.BeaconState.fields.nextWithdrawalValidatorIndex,
+    nextWithdrawalIndex: capellaSsz.BeaconState.fields.nextWithdrawalIndex,
+    nextWithdrawalValidatorIndex: capellaSsz.BeaconState.fields.nextWithdrawalValidatorIndex,
     // Deep history valid from Capella onwards
-    // historicalSummaries: capellaSsz.BeaconState.fields.historicalSummaries,
+    historicalSummaries: capellaSsz.BeaconState.fields.historicalSummaries,
   },
   {typeName: "BeaconState", jsonCase: "eth2"}
 );

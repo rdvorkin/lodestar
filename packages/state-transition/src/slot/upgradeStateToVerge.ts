@@ -19,10 +19,8 @@ export function upgradeStateToVerge(stateDeneb: CachedBeaconStateDeneb): CachedB
     epoch: stateDeneb.epochCtx.epoch,
   });
 
-  // Initialize ExecutionWitness empty List
-  stateVerge.latestExecutionPayloadHeader.executionWitness = ssz.verge.ExecutionWitness.defaultViewDU();
+  // latestExecutionPayloadHeader's executionWitnessRoot will have default zero root
 
   stateVerge.commit();
-
   return stateVerge;
 }

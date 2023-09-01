@@ -18,8 +18,9 @@ export enum ForkSeq {
   altair = 1,
   bellatrix = 2,
   capella = 3,
-  deneb = 4,
-  verge = 5,
+  // Verge is scheduled after capella for now
+  verge = 4,
+  deneb = 5,
 }
 
 export type ForkLightClient = Exclude<ForkName, ForkName.phase0>;
@@ -37,7 +38,13 @@ export function isForkWithdrawals(fork: ForkName): fork is ForkWithdrawals {
   return isForkExecution(fork) && fork !== ForkName.bellatrix;
 }
 
-export type ForkBlobs = Exclude<ForkExecution, ForkName.bellatrix | ForkName.capella>;
+// Verge is right now scheduled after capella
+export type ForkVerge = Exclude<ForkWithdrawals, ForkName.capella>;
+export function isForkVerge(fork: ForkName): fork is ForkBlobs {
+  return isForkWithdrawals(fork) && fork !== ForkName.capella;
+}
+
+export type ForkBlobs = Exclude<ForkWithdrawals, ForkName.capella>;
 export function isForkBlobs(fork: ForkName): fork is ForkBlobs {
   return isForkWithdrawals(fork) && fork !== ForkName.capella;
 }

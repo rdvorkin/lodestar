@@ -119,7 +119,8 @@ export function executionPayloadToPayloadHeader(
 
   if (fork >= ForkSeq.verge) {
     // https://github.com/ethereum/consensus-specs/blob/db74090c1e8dc1fb2c052bae268e22dc63061e32/specs/verge/beacon-chain.md#process_execution_payload
-    (bellatrixPayloadFields as verge.ExecutionPayloadHeader).executionWitness = (payload as verge.ExecutionPayload).executionWitness;
+    (bellatrixPayloadFields as verge.ExecutionPayloadHeader).executionWitnessRoot =
+      ssz.verge.ExecutionWitness.hashTreeRoot((payload as verge.ExecutionPayload).executionWitness);
   }
 
   return bellatrixPayloadFields;
