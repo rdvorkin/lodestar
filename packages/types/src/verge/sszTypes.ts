@@ -4,7 +4,7 @@ import {
   ByteVectorType,
   VectorCompositeType,
   ByteListType,
-  OptionalType
+  OptionalType,
 } from "@chainsafe/ssz";
 import {
   HISTORICAL_ROOTS_LIMIT,
@@ -12,6 +12,9 @@ import {
   MAX_STEMS,
   IPA_PROOF_DEPTH,
   MAX_COMMITMENTS_PER_STEM,
+  BLOCK_BODY_EXECUTION_PAYLOAD_DEPTH as EXECUTION_PAYLOAD_DEPTH,
+  EPOCHS_PER_SYNC_COMMITTEE_PERIOD,
+  SLOTS_PER_EPOCH,
 } from "@lodestar/params";
 import {ssz as primitiveSsz} from "../primitive/index.js";
 import {ssz as phase0Ssz} from "../phase0/index.js";
@@ -20,7 +23,7 @@ import {ssz as bellatrixSsz} from "../bellatrix/index.js";
 import {ssz as capellaSsz} from "../capella/index.js";
 // import {ssz as denebSsz} from "../deneb/index.js";
 
-const {UintNum64, Root, BLSSignature} = primitiveSsz;
+const {UintNum64, Root, BLSSignature, Slot, Bytes32} = primitiveSsz;
 
 // Spec: https://github.com/ethereum/consensus-specs/blob/db74090c1e8dc1fb2c052bae268e22dc63061e32/specs/verge/beacon-chain.md
 
@@ -46,7 +49,7 @@ export const SuffixStateDiff = new ContainerType(
     casingMap: {
       suffix: "suffix",
       currentValue: "currentValue",
-      newValue: "newValue"
+      newValue: "newValue",
     },
   }
 );
@@ -218,4 +221,63 @@ export const BeaconState = new ContainerType(
     historicalSummaries: capellaSsz.BeaconState.fields.historicalSummaries,
   },
   {typeName: "BeaconState", jsonCase: "eth2"}
+);
+
+export const LightClientHeader = new ContainerType(
+  {
+    beacon: phase0Ssz.BeaconBlockHeader,
+    execution: ExecutionPayloadHeader,
+    executionBranch: new VectorCompositeType(Bytes32, EXECUTION_PAYLOAD_DEPTH),
+  },
+  {typeName: "LightClientHeader", jsonCase: "eth2"}
+);
+
+export const LightClientBootstrap = new ContainerType(
+  {
+    header: LightClientHeader,
+    currentSyncCommittee: altairSsz.SyncCommittee,
+    currentSyncCommitteeBranch: altairSsz.LightClientBootstrap.fields.currentSyncCommitteeBranch,
+  },
+  {typeName: "LightClientBootstrap", jsonCase: "eth2"}
+);
+
+export const LightClientUpdate = new ContainerType(
+  {
+    attestedHeader: LightClientHeader,
+    nextSyncCommittee: altairSsz.SyncCommittee,
+    nextSyncCommitteeBranch: altairSsz.LightClientUpdate.fields.nextSyncCommitteeBranch,
+    finalizedHeader: LightClientHeader,
+    finalityBranch: altairSsz.LightClientUpdate.fields.finalityBranch,
+    syncAggregate: altairSsz.SyncAggregate,
+    signatureSlot: Slot,
+  },
+  {typeName: "LightClientUpdate", jsonCase: "eth2"}
+);
+
+export const LightClientFinalityUpdate = new ContainerType(
+  {
+    attestedHeader: LightClientHeader,
+    finalizedHeader: LightClientHeader,
+    finalityBranch: altairSsz.LightClientFinalityUpdate.fields.finalityBranch,
+    syncAggregate: altairSsz.SyncAggregate,
+    signatureSlot: Slot,
+  },
+  {typeName: "LightClientFinalityUpdate", jsonCase: "eth2"}
+);
+
+export const LightClientOptimisticUpdate = new ContainerType(
+  {
+    attestedHeader: LightClientHeader,
+    syncAggregate: altairSsz.SyncAggregate,
+    signatureSlot: Slot,
+  },
+  {typeName: "LightClientOptimisticUpdate", jsonCase: "eth2"}
+);
+
+export const LightClientStore = new ContainerType(
+  {
+    snapshot: LightClientBootstrap,
+    validUpdates: new ListCompositeType(LightClientUpdate, EPOCHS_PER_SYNC_COMMITTEE_PERIOD * SLOTS_PER_EPOCH),
+  },
+  {typeName: "LightClientStore", jsonCase: "eth2"}
 );

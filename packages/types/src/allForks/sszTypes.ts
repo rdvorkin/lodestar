@@ -177,12 +177,12 @@ export const allForksLightClient = {
   verge: {
     BeaconBlock: verge.BeaconBlock,
     BeaconBlockBody: verge.BeaconBlockBody,
-    LightClientHeader: deneb.LightClientHeader,
-    LightClientBootstrap: deneb.LightClientBootstrap,
-    LightClientUpdate: deneb.LightClientUpdate,
-    LightClientFinalityUpdate: deneb.LightClientFinalityUpdate,
-    LightClientOptimisticUpdate: deneb.LightClientOptimisticUpdate,
-    LightClientStore: deneb.LightClientStore,
+    LightClientHeader: verge.LightClientHeader,
+    LightClientBootstrap: verge.LightClientBootstrap,
+    LightClientUpdate: verge.LightClientUpdate,
+    LightClientFinalityUpdate: verge.LightClientFinalityUpdate,
+    LightClientOptimisticUpdate: verge.LightClientOptimisticUpdate,
+    LightClientStore: verge.LightClientStore,
   },
 };
 
