@@ -40,6 +40,6 @@ export function isForkWithdrawals(fork: ForkName): fork is ForkWithdrawals {
 
 export type ForkPreBlobs = ForkPreWithdrawals | ForkName.capella;
 export type ForkBlobs = Exclude<ForkName, ForkPreBlobs>;
-export function isForkBlobs(fork: ForkName): fork is ForkName.deneb {
+export function isForkBlobs(fork: ForkName): fork is ForkBlobs {
   return isForkWithdrawals(fork) && fork !== ForkName.capella;
 }

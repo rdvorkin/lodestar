@@ -1,5 +1,5 @@
 import {fromHexString, toHexString} from "@chainsafe/ssz";
-import {routes, ServerApi, isSignedBlockContents, isSignedBlindedBlockContents, ResponseFormat} from "@lodestar/api";
+import {routes, ServerApi, isSignedBlockContents, ResponseFormat} from "@lodestar/api";
 import {computeTimeAtSlot} from "@lodestar/state-transition";
 import {SLOTS_PER_HISTORICAL_ROOT} from "@lodestar/params";
 import {sleep, toHex} from "@lodestar/utils";
@@ -140,15 +140,11 @@ export function getBeaconBlockApi({
   ) => {
     const executionBuilder = chain.executionBuilder;
     if (!executionBuilder) throw Error("exeutionBuilder required to publish SignedBlindedBeaconBlock");
-    // Mechanism for blobs & blocks on builder is not yet finalized
-    if (isSignedBlindedBlockContents(signedBlindedBlockOrContents)) {
-      throw Error("exeutionBuilder not yet implemented for deneb+ forks");
-    } else {
-      const signedBlockOrContents = await executionBuilder.submitBlindedBlock(signedBlindedBlockOrContents);
-      // the full block is published by relay and it's possible that the block is already known to us by gossip
-      // see https://github.com/ChainSafe/lodestar/issues/5404
-      return publishBlock(signedBlockOrContents, {...opts, ignoreIfKnown: true});
-    }
+
+    // the full block is published by relay and it's possible that the block is already known to us by gossip
+    // see https://github.com/ChainSafe/lodestar/issues/5404
+    const signedBlockOrContents = await executionBuilder.submitBlindedBlock(signedBlindedBlockOrContents);
+    return publishBlock(signedBlockOrContents, {...opts, ignoreIfKnown: true});
   };
 
   return {

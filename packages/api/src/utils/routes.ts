@@ -40,6 +40,12 @@ export function isSignedBlindedBlockContents(
   return (data as SignedBlindedBlockContents).signedBlindedBlobSidecars !== undefined;
 }
 
+export function isExecutionPayloadAndBlobsBundle(
+  data: allForks.ExecutionPayload | allForks.ExecutionPayloadAndBlobsBundle
+): data is allForks.ExecutionPayloadAndBlobsBundle {
+  return (data as allForks.ExecutionPayloadAndBlobsBundle).blobsBundle !== undefined;
+}
+
 /* eslint-disable @typescript-eslint/naming-convention */
 
 export function AllForksSignedBlockContentsReqSerializer(

@@ -13,19 +13,7 @@ import {
   PubkeyIndexMap,
 } from "@lodestar/state-transition";
 import {BeaconConfig} from "@lodestar/config";
-import {
-  allForks,
-  UintNum64,
-  Root,
-  phase0,
-  Slot,
-  RootHex,
-  Epoch,
-  ValidatorIndex,
-  deneb,
-  Wei,
-  bellatrix,
-} from "@lodestar/types";
+import {allForks, UintNum64, Root, phase0, Slot, RootHex, Epoch, ValidatorIndex, deneb, Wei} from "@lodestar/types";
 import {CheckpointWithHex, ExecutionStatus, IForkChoice, ProtoBlock} from "@lodestar/fork-choice";
 import {ProcessShutdownCallback} from "@lodestar/validator";
 import {Logger, isErrorAborted, pruneSetToMax, sleep, toHex} from "@lodestar/utils";
@@ -135,7 +123,7 @@ export class BeaconChain implements IBeaconChain {
   readonly producedBlobSidecarsCache = new Map<BlockHash, {blobSidecars: deneb.BlobSidecars; slot: Slot}>();
   readonly producedBlindedBlobSidecarsCache = new Map<
     BlockHash,
-    {blobSidecars: deneb.BlindedBlobSidecars; slot: Slot}
+    {blindedBlobSidecars: deneb.BlindedBlobSidecars; slot: Slot}
   >();
 
   readonly producedBlockRoot = new Set<RootHex>();
@@ -521,7 +509,7 @@ export class BeaconChain implements IBeaconChain {
     // publishing the blinded block's full version
     if (blobs.type === BlobsResultType.produced) {
       // body is of full type here
-      const blockHash = toHex((block as bellatrix.BeaconBlock).body.executionPayload.blockHash);
+      const blockHash = blobs.blockHash;
       const blobSidecars = blobs.blobSidecars.map((blobSidecar) => ({
         ...blobSidecar,
         blockRoot,
@@ -533,6 +521,22 @@ export class BeaconChain implements IBeaconChain {
       this.producedBlobSidecarsCache.set(blockHash, {blobSidecars, slot});
       pruneSetToMax(
         this.producedBlobSidecarsCache,
+        this.opts.maxCachedBlobSidecars ?? DEFAULT_MAX_CACHED_BLOB_SIDECARS
+      );
+    } else if (blobs.type === BlobsResultType.blinded) {
+      // body is of blinded type here
+      const blockHash = blobs.blockHash;
+      const blindedBlobSidecars = blobs.blobSidecars.map((blindedBlobSidecar) => ({
+        ...blindedBlobSidecar,
+        blockRoot,
+        slot,
+        blockParentRoot: parentBlockRoot,
+        proposerIndex,
+      }));
+
+      this.producedBlindedBlobSidecarsCache.set(blockHash, {blindedBlobSidecars, slot});
+      pruneSetToMax(
+        this.producedBlindedBlobSidecarsCache,
         this.opts.maxCachedBlobSidecars ?? DEFAULT_MAX_CACHED_BLOB_SIDECARS
       );
     }

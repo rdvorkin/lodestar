@@ -75,6 +75,7 @@ export type FullOrBlindedBlobSidecars = deneb.BlobSidecars | deneb.BlindedBlobSi
 
 export type BuilderBid = bellatrix.BuilderBid | capella.BuilderBid | deneb.BuilderBid;
 export type SignedBuilderBid = bellatrix.SignedBuilderBid | capella.SignedBuilderBid | deneb.SignedBuilderBid;
+export type ExecutionPayloadAndBlobsBundle = deneb.ExecutionPayloadAndBlobsBundle;
 
 export type LightClientHeader = altair.LightClientHeader | capella.LightClientHeader | deneb.LightClientHeader;
 export type LightClientBootstrap =
@@ -287,4 +288,5 @@ export type AllForksLightClientSSZTypes = {
 export type AllForksBlobsSSZTypes = {
   BlobSidecar: AllForksTypeOf<typeof denebSsz.BlobSidecar>;
   BlindedBlobSidecar: AllForksTypeOf<typeof denebSsz.BlindedBlobSidecar>;
+  ExecutionPayloadAndBlobsBundle: AllForksTypeOf<typeof denebSsz.ExecutionPayloadAndBlobsBundle>;
 };
