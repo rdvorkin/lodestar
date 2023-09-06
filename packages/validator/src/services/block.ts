@@ -370,6 +370,7 @@ export class BlockProposingService {
       }
 
       // All subsequent forks are expected to use v2 too
+      case ForkName.verge:
       case ForkName.altair:
       case ForkName.bellatrix:
       case ForkName.capella: {
