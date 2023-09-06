@@ -285,10 +285,10 @@ export function initializeBeaconStateFromEth1(
       ssz.deneb.ExecutionPayloadHeader.defaultViewDU();
   }
 
-  if (GENESIS_SLOT >= config.VERGE_FORK_EPOCH) {
+  if (GENESIS_SLOT >= config.ELECTRA_FORK_EPOCH) {
     const stateVerge = state as CompositeViewDU<typeof ssz.verge.BeaconState>;
-    stateVerge.fork.previousVersion = config.VERGE_FORK_VERSION;
-    stateVerge.fork.currentVersion = config.VERGE_FORK_VERSION;
+    stateVerge.fork.previousVersion = config.ELECTRA_FORK_VERSION;
+    stateVerge.fork.currentVersion = config.ELECTRA_FORK_VERSION;
     stateVerge.latestExecutionPayloadHeader =
       (executionPayloadHeader as CompositeViewDU<typeof ssz.verge.ExecutionPayloadHeader>) ??
       ssz.verge.ExecutionPayloadHeader.defaultViewDU();

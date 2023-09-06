@@ -198,7 +198,7 @@ function processSlotsWithTransientCache(
       if (stateSlot === config.DENEB_FORK_EPOCH) {
         postState = upgradeStateToDeneb(postState as CachedBeaconStateCapella) as CachedBeaconStateAllForks;
       }
-      if (stateSlot === config.VERGE_FORK_EPOCH) {
+      if (stateSlot === config.ELECTRA_FORK_EPOCH) {
         postState = upgradeStateToVerge(postState as CachedBeaconStateDeneb) as CachedBeaconStateAllForks;
       }
     } else {

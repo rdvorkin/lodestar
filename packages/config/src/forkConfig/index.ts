@@ -58,9 +58,9 @@ export function createForkConfig(config: ChainConfig): ForkConfig {
   const verge: ForkInfo = {
     name: ForkName.verge,
     seq: ForkSeq.verge,
-    epoch: config.VERGE_FORK_EPOCH,
-    version: config.VERGE_FORK_VERSION,
-    prevVersion: config.DENEB_FORK_VERSION,
+    epoch: config.ELECTRA_FORK_EPOCH,
+    version: config.ELECTRA_FORK_VERSION,
+    prevVersion: config.CAPELLA_FORK_VERSION,
     prevForkName: ForkName.deneb,
   };
 

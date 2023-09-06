@@ -46,8 +46,8 @@ export const chainConfig: ChainConfig = {
   DENEB_FORK_EPOCH: Infinity,
 
   // VERGE
-  VERGE_FORK_VERSION: b("0x05000000"),
-  VERGE_FORK_EPOCH: Infinity,
+  ELECTRA_FORK_VERSION: b("0x05000000"),
+  ELECTRA_FORK_EPOCH: Infinity,
 
   // Time parameters
   // ---------------------------------------------------------------
