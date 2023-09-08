@@ -61,7 +61,7 @@ export function createForkConfig(config: ChainConfig): ForkConfig {
     epoch: config.ELECTRA_FORK_EPOCH,
     version: config.ELECTRA_FORK_VERSION,
     prevVersion: config.CAPELLA_FORK_VERSION,
-    prevForkName: ForkName.deneb,
+    prevForkName: ForkName.capella,
   };
 
   /** Forks in order order of occurence, `phase0` first */

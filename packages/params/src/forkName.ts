@@ -46,5 +46,5 @@ export function isForkVerge(fork: ForkName): fork is ForkBlobs {
 
 export type ForkBlobs = Exclude<ForkWithdrawals, ForkName.capella>;
 export function isForkBlobs(fork: ForkName): fork is ForkBlobs {
-  return isForkWithdrawals(fork) && fork !== ForkName.verge;
+  return isForkVerge(fork) && fork !== ForkName.verge;
 }
