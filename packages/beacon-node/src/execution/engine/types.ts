@@ -282,6 +282,7 @@ export function parseExecutionPayload(
     // right now the casing of executionWitness is camel case in the ssz caseMap
     // we can directly use fromJson to read the serialized data from payload
     const {executionWitness} = data;
+    console.log("parse executionWitness from EL", executionWitness, {blockNumber: data.blockNumber});
     (executionPayload as verge.ExecutionPayload).executionWitness =
       ssz.verge.ExecutionWitness.fromJson(executionWitness);
   }
