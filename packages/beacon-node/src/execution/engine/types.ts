@@ -1,3 +1,4 @@
+import * as util from "node:util";
 import {allForks, capella, deneb, Wei, bellatrix, Root, verge, ssz} from "@lodestar/types";
 import {
   BYTES_PER_LOGS_BLOOM,
@@ -282,7 +283,11 @@ export function parseExecutionPayload(
     // right now the casing of executionWitness is camel case in the ssz caseMap
     // we can directly use fromJson to read the serialized data from payload
     const {executionWitness} = data;
-    console.log("parse executionWitness from EL", executionWitness, {blockNumber: data.blockNumber});
+    console.log(
+      "parse executionWitness from EL",
+      util.inspect(executionWitness, false, null, true /* enable colors */),
+      {blockNumber: data.blockNumber}
+    );
     (executionPayload as verge.ExecutionPayload).executionWitness =
       ssz.verge.ExecutionWitness.fromJson(executionWitness);
   }
