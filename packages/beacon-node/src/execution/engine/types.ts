@@ -200,6 +200,12 @@ export function serializeExecutionPayload(fork: ForkName, data: allForks.Executi
     // right now the caseMap of ssz ExecutionWitness is camel cased and can
     // directly be used to serialize tojson
     payload.executionWitness = ssz.verge.ExecutionWitness.toJson(executionWitness);
+    // serialization with ssz serialize suffix diff's suffix to a string while geth expects num
+    (payload.executionWitness as verge.ExecutionWitness).stateDiff.forEach((sDiff) => {
+      sDiff.suffixDiffs.forEach((sfDiff) => {
+        sfDiff.suffix = Number(sfDiff.suffix);
+      });
+    });
   }
 
   return payload;
