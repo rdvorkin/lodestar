@@ -25,8 +25,6 @@ import {
   deneb,
   Wei,
   bellatrix,
-  isBlindedBeaconBlock,
-  ssz,
   capella,
 } from "@lodestar/types";
 import {CheckpointWithHex, ExecutionStatus, IForkChoice, ProtoBlock} from "@lodestar/fork-choice";
@@ -44,6 +42,7 @@ import {ensureDir, writeIfNotExist} from "../util/file.js";
 import {isOptimisticBlock} from "../util/forkChoice.js";
 import {
   blindedOrFullToFull,
+  getEth1BlockHashFromSerializedBlock,
   reassembleBlindedOrFullToFullBytes,
   TransactionsAndWithdrawals,
 } from "../util/fullOrBlindedBlock.js";
@@ -472,14 +471,21 @@ export class BeaconChain implements IBeaconChain {
 
   async blindedBlockToFull(block: allForks.FullOrBlindedSignedBeaconBlock): Promise<allForks.SignedBeaconBlock> {
     const info = this.config.getForkInfo(block.message.slot);
-    return blindedOrFullToFull(this.config, info.seq, block, await this.getTransactionsAndWithdrawals(seq, slot));
+    const blockHash = Buffer.from(block.message.body.eth1Data.blockHash).toString("hex");
+    return blindedOrFullToFull(
+      this.config,
+      info.seq,
+      block,
+      await this.getTransactionsAndWithdrawals(info.seq, blockHash)
+    );
   }
 
-  blindedOrFullToFullBytes(forkSeq: ForkSeq, block: Uint8Array): AsyncGenerator<Uint8Array> {
-    // TODO: Same code as `blindedBlockToFull`, but without de-serializing block.. looks really annoying..
-    // We should review if the optimization to stream only bytes on ReqResp is worth the complexity, an alternative
-    // is to implement more restrictive rate-limiting overall such that the load of serdes is acceptable.
-    return reassembleBlindedOrFullToFullBytes(forkSeq, block, this.getTransactionsAndWithdrawals(seq, slot));
+  blindedOrFullToFullBytes(forkSeq: ForkSeq, block: Uint8Array): AsyncIterable<Uint8Array> {
+    return reassembleBlindedOrFullToFullBytes(
+      forkSeq,
+      block,
+      this.getTransactionsAndWithdrawals(forkSeq, getEth1BlockHashFromSerializedBlock(block))
+    );
   }
 
   produceBlock(blockAttributes: BlockAttributes): Promise<{block: allForks.BeaconBlock; blockValue: Wei}> {
@@ -645,18 +651,19 @@ export class BeaconChain implements IBeaconChain {
     }
   }
 
-  private async getTransactionsAndWithdrawals(): Promise<TransactionsAndWithdrawals> {
+  private async getTransactionsAndWithdrawals(
+    forkSeq: ForkSeq,
+    blockHash: string
+  ): Promise<TransactionsAndWithdrawals> {
     let transactions: Uint8Array[] | undefined;
     let withdrawals: capella.Withdrawals | undefined;
 
-    if (seq >= ForkSeq.bellatrix) {
-      transactions = await this.getTransactions();
+    if (forkSeq >= ForkSeq.bellatrix) {
+      const [payload] = await this.executionEngine.getPayloadBodiesByHash([blockHash]);
+      if (payload?.transactions) transactions = payload.transactions;
+      if (payload?.withdrawals) withdrawals = payload.withdrawals;
     }
 
-    if (seq >= ForkSeq.capella) {
-      withdrawals = await this.getWithdrawals();
-    }
-    // TODO: (matthewkeil) Temp to get build working
     return {
       transactions,
       withdrawals,
