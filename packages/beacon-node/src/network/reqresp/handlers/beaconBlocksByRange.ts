@@ -45,8 +45,13 @@ export async function* onBlocksOrBlobSidecarsByRange(
       const {name, seq} = chain.config.getForkInfo(db.finalized.decodeKey(key));
       // It's a bis sus that deleting this line will still let the code compile..
       // This code MUST include tests to ensure ReqResp works with full or blinded blocks
+      const chunks: Uint8Array[] = [];
+      for await (const chunk of chain.blindedOrFullToFullBytes(seq, value)) {
+        chunks.push(chunk);
+      }
+
       yield {
-        data: await chain.blindedBlockToFullBytes(seq, value),
+        data: Buffer.concat(chunks),
         fork: name,
       };
     }
@@ -81,8 +86,12 @@ export async function* onBlocksOrBlobSidecarsByRange(
         // It's a bis sus that deleting this line will still let the code compile..
         // This code MUST include tests to ensure ReqResp works with full or blinded blocks
         const {name, seq} = chain.config.getForkInfo(block.slot);
+        const chunks: Uint8Array[] = [];
+        for await (const chunk of chain.blindedOrFullToFullBytes(seq, blockBytes)) {
+          chunks.push(chunk);
+        }
         yield {
-          data: await chain.blindedBlockToFullBytes(seq, blockBytes),
+          data: Buffer.concat(chunks),
           fork: name,
         };
       }
