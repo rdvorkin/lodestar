@@ -44,7 +44,7 @@ import {ensureDir, writeIfNotExist} from "../util/file.js";
 import {isOptimisticBlock} from "../util/forkChoice.js";
 import {
   blindedOrFullToFull,
-  reassembleBlindedBlockBytesToFullBytes,
+  reassembleBlindedOrFullToFullBytes,
   TransactionsAndWithdrawals,
 } from "../util/fullOrBlindedBlock.js";
 import {CheckpointStateCache, StateContextCache} from "./stateCache/index.js";
@@ -475,11 +475,11 @@ export class BeaconChain implements IBeaconChain {
     return blindedOrFullToFull(this.config, info.seq, block, await this.getTransactionsAndWithdrawals(seq, slot));
   }
 
-  blindedBlockToFullBytes(forkSeq: ForkSeq, block: Uint8Array): AsyncGenerator<Uint8Array> {
+  blindedOrFullToFullBytes(forkSeq: ForkSeq, block: Uint8Array): AsyncGenerator<Uint8Array> {
     // TODO: Same code as `blindedBlockToFull`, but without de-serializing block.. looks really annoying..
     // We should review if the optimization to stream only bytes on ReqResp is worth the complexity, an alternative
     // is to implement more restrictive rate-limiting overall such that the load of serdes is acceptable.
-    return reassembleBlindedBlockBytesToFullBytes(forkSeq, block, this.getTransactionsAndWithdrawals(seq, slot));
+    return reassembleBlindedOrFullToFullBytes(forkSeq, block, this.getTransactionsAndWithdrawals(seq, slot));
   }
 
   produceBlock(blockAttributes: BlockAttributes): Promise<{block: allForks.BeaconBlock; blockValue: Wei}> {

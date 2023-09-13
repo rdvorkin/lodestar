@@ -140,7 +140,7 @@ export interface IBeaconChain {
   getBlobSidecars(beaconBlock: deneb.BeaconBlock): deneb.BlobSidecars;
 
   blindedBlockToFull(block: allForks.FullOrBlindedSignedBeaconBlock): Promise<allForks.SignedBeaconBlock>;
-  blindedBlockToFullBytes(forkSeq: ForkSeq, block: Uint8Array): AsyncGenerator<Uint8Array>;
+  blindedOrFullToFullBytes(forkSeq: ForkSeq, block: Uint8Array): AsyncGenerator<Uint8Array>;
 
   produceBlock(blockAttributes: BlockAttributes): Promise<{block: allForks.BeaconBlock; blockValue: Wei}>;
   produceBlindedBlock(blockAttributes: BlockAttributes): Promise<{block: allForks.BlindedBeaconBlock; blockValue: Wei}>;
