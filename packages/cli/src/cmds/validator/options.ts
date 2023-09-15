@@ -43,6 +43,7 @@ export type IValidatorCliArgs = AccountValidatorArgs &
     doppelgangerProtection?: boolean;
     defaultGasLimit?: number;
 
+    builder?: boolean;
     "builder.selection"?: string;
 
     importKeystores?: string[];
@@ -226,6 +227,13 @@ export const validatorOptions: CliCommandOptions<IValidatorCliArgs> = {
     description: "Suggested gas limit to the engine/builder for building execution payloads. Only used post merge.",
     defaultDescription: `${defaultOptions.defaultGasLimit}`,
     type: "number",
+  },
+
+  builder: {
+    type: "boolean",
+    description: "Enable execution payload production via a builder for better rewards",
+    group: "builder",
+    deprecated: "enabling or disabling builder flow is now solely managed by `builder.selection` flag",
   },
 
   "builder.selection": {
