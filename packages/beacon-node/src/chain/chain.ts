@@ -44,7 +44,7 @@ import {isOptimisticBlock} from "../util/forkChoice.js";
 import {
   blindedOrFullToFull,
   getEth1BlockHashFromSerializedBlock,
-  reassembleBlindedOrFullToFullBytes,
+  reassembleblindedOrFullBlockToFullBytes,
   TransactionsAndWithdrawals,
 } from "../util/fullOrBlindedBlock.js";
 import {CheckpointStateCache, StateContextCache} from "./stateCache/index.js";
@@ -441,7 +441,7 @@ export class BeaconChain implements IBeaconChain {
       if (block) {
         const data = await this.db.block.get(fromHexString(block.blockRoot));
         if (data) {
-          return {block: await this.blindedBlockToFull(data), executionOptimistic: isOptimisticBlock(block)};
+          return {block: await this.blindedOrFullBlockToFull(data), executionOptimistic: isOptimisticBlock(block)};
         }
       }
       // A non-finalized slot expected to be found in the hot db, could be archived during
@@ -450,7 +450,7 @@ export class BeaconChain implements IBeaconChain {
     }
 
     const data = await this.db.blockArchive.get(slot);
-    return data && {block: await this.blindedBlockToFull(data), executionOptimistic: false};
+    return data && {block: await this.blindedOrFullBlockToFull(data), executionOptimistic: false};
   }
 
   async getBlockByRoot(
@@ -460,7 +460,7 @@ export class BeaconChain implements IBeaconChain {
     if (block) {
       const data = await this.db.block.get(fromHexString(root));
       if (data) {
-        return {block: await this.blindedBlockToFull(data), executionOptimistic: isOptimisticBlock(block)};
+        return {block: await this.blindedOrFullBlockToFull(data), executionOptimistic: isOptimisticBlock(block)};
       }
       // If block is not found in hot db, try cold db since there could be an archive cycle happening
       // TODO: Add a lock to the archiver to have determinstic behaviour on where are blocks
@@ -470,7 +470,7 @@ export class BeaconChain implements IBeaconChain {
     return data && {block: data, executionOptimistic: false};
   }
 
-  async blindedBlockToFull(block: allForks.FullOrBlindedSignedBeaconBlock): Promise<allForks.SignedBeaconBlock> {
+  async blindedOrFullBlockToFull(block: allForks.FullOrBlindedSignedBeaconBlock): Promise<allForks.SignedBeaconBlock> {
     const info = this.config.getForkInfo(block.message.slot);
     return blindedOrFullToFull(
       this.config,
@@ -480,8 +480,8 @@ export class BeaconChain implements IBeaconChain {
     );
   }
 
-  blindedOrFullToFullBytes(forkSeq: ForkSeq, block: Uint8Array): AsyncIterable<Uint8Array> {
-    return reassembleBlindedOrFullToFullBytes(
+  blindedOrFullBlockToFullBytes(forkSeq: ForkSeq, block: Uint8Array): AsyncIterable<Uint8Array> {
+    return reassembleblindedOrFullBlockToFullBytes(
       forkSeq,
       block,
       this.getTransactionsAndWithdrawals(forkSeq, toHexString(getEth1BlockHashFromSerializedBlock(block)))
